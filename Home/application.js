@@ -1,3 +1,13 @@
+/** 
+ * calling env file 
+ */
+require('dotenv').config();
+/** 
+* Calling database connectivity file 
+*/
+require('../DatabaseConfig/dbConfiguration').connect();
+
+
 let express = require('express');
 let application = express();
 
@@ -12,15 +22,7 @@ const swaggerDocument = YAML.load('./Home/swagger.yaml');
 application.use('/', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 application.use(express.json());
 
-/** 
- * calling env file 
- */
-require('dotenv').config();
 
-/** 
- * Calling database connectivity file 
- */
-require('../DatabaseConfig/dbConfiguration').connect();
 
 
 module.exports = application;
