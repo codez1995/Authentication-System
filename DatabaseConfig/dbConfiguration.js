@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const { response } = require('../Home/application');
 const { MONGODB_URL } = process.env;
 
 /**
@@ -21,6 +19,6 @@ exports.connect = async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }).then(console.log(successMessage)).catch((error) => {
-        console.log(errorMessage);
+        console.log(errorMessage, error);
     })
 }

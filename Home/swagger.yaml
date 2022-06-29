@@ -5,7 +5,10 @@ info:
     version: 1.0.0
 
 servers:
-  - url: http://localhost:4200/v1
-    description: Optional server description, e.g. Main (production) server
-  - url: http://basicAuthenticationSystem.com
-    description: Optional server description, e.g. Internal staging server for testing 
+  - url: http://localhost:4200/
+    description: This is a localserver URL for run backend Application.
+  - url: https://my-authentication-system.herokuapp.com/
+    description: This is a Live server URL for run backend Application.
+
+paths:
+    /register:
