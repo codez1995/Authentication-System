@@ -1,0 +1,30 @@
+{
+  "name": "authentication-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./Home/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codez1995/Authentication-System.git"
+  },
+  "author": "Tarun Surana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codez1995/Authentication-System/issues"
+  },
+  "homepage": "https://github.com/codez1995/Authentication-System#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongodb": "^4.7.0",
+    "mongoose": "^6.4.1",
+    "swagger-ui-express": "^4.4.0",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  }
+}

@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info: 
+    title: Authentication System
+    description: Here user use this API'S Docs to be registered and login for any application.
+    version: 1.0.0
+
+servers:
+  - url: http://localhost:4200/v1
+    description: Optional server description, e.g. Main (production) server
+  - url: http://staging-api.example.com
+    description: Optional server description, e.g. Internal staging server for testing 
