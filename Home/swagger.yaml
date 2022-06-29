@@ -7,5 +7,5 @@ info:
 servers:
   - url: http://localhost:4200/v1
     description: Optional server description, e.g. Main (production) server
-  - url: http://staging-api.example.com
+  - url: http://basicAuthenticationSystem.com
     description: Optional server description, e.g. Internal staging server for testing 
