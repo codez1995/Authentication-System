@@ -28,13 +28,14 @@ application.use(express.json());
  * name are Login Schema and Register Schema
  */
 
-let loginPayload = require('../Middleware/loginSchema');
 let registerPayload = require('../Middleware/registrationSchema');
 
 /**
  * Here Called BycrptJS module for end to end encryption.
+ * let's call jwt for authentication basis on UI.
  */
 const bycrpt = require('bcryptjs');
+const AuthToken = require('jsonwebtoken');
 
 /**
  * ============================================================
@@ -50,42 +51,61 @@ const bycrpt = require('bcryptjs');
  */
 
 application.post('/register', async (req, res) => {
-    const {firstName, middleName, lastName, userName, password} = req.body;
-    const emailId = userName.toLowerCase();
-    const existEmail = await registerPayload.findOne({emailId});
-    if(firstName != null && lastName != null && userName != null && password != null) {
-        if(existEmail.userName === userName) {
+    const { firstName, middleName, lastName, emailId, password } = req.body;
+
+        const existEmail = await registerPayload.findOne({ emailId });
+        if (existEmail?.emailId == emailId) 
+        {
             res.status(400).send("User Already exist!");
         }
+        else if (existEmail?.emailId != emailId) {
+            const encryptedPassword = await bycrpt.hash(password, 10);
+            registerPayload = registerPayload.create({
+                firstName,
+                middleName,
+                lastName,
+                emailId: emailId,
+                password: encryptedPassword
+            });
+            const token = AuthToken.sign(
+                { user_id: registerPayload._id, emailId },
+                process.env.SECRET_KEY,
+                { expiresIn: "2h" }
+            )
+            registerPayload.token = token;
+            registerPayload.password = undefined;
+            res.status(201).send({ "data": req.body, "message": "User Registered Successfully" });
+        }
+})
+
+application.post('/login', async (req, res) => {
+    const { emailId, password } = req.body;
+
+    const existingUser = await registerPayload.findOne({emailId: emailId});
+    
+    if(existingUser != null) {
+        if(existingUser.emailId && bycrpt.compare(existingUser.password, password)) {
+            const token = AuthToken.sign(
+                { user_id: registerPayload._id, emailId },
+                process.env.SECRET_KEY,
+                { expiresIn: "2h" }
+            )
+            registerPayload.token = token;
+            registerPayload.password = undefined
+            res.status(200).send({"message": "User has successfully login!"});
+        } 
         else {
-            res.status(200).send({"data":req.body, "message": "User Registered Successfully"})
+            res.status(400).send("EmailId and Password are unauthorized");
         }
     }
-    else {
-        res.status(401).send("All fields are required!");
+    else if(existingUser == null) {
+        res.status(401).send("You are not register in our System.");
     }
-
-    /**
-     * Encrpt Password of User
-     */
-    const encryptedPassword = await bycrpt.hash(password, 10);
-
-    registerPayload = registerPayload.create({
-        firstName,
-        middleName,
-        lastName,
-        userName: userName.toLowerCase(),
-        password: encryptedPassword
-    });
-
-    registerPayload.password = undefined;
-    res.status(201).json(registerPayload);
 })
 
 
 
 /**
- * Export a whole application index.js file.
+ * Export a whole application application.js file.
  */
-
 module.exports = application;

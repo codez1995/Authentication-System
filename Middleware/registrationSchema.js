@@ -13,17 +13,15 @@ const registerUser = mongoose.Schema({
         type:String,
         default: null,
     },
-    userName: {
+    emailId: {
         type:String,
         default: null,
     },
     password: {
         type:String,
-        default: null,
     },
     token: {
-        type: String,
-        default: null,
+        type:String,
     }
 })
 
