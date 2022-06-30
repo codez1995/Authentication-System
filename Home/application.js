@@ -93,9 +93,6 @@ application.post('/login', async (req, res) => {
             registerPayload.token = token;
             registerPayload.password = undefined
             res.status(200).send({"message": "User has successfully login!"});
-        } 
-        else {
-            res.status(400).send("EmailId and Password are unauthorized");
         }
     }
     else if(existingUser == null) {

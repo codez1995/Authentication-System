@@ -1,8 +1,14 @@
 openapi: 3.0.0
-info: 
-    title: Authentication System
-    description: Here user use this API'S Docs to be registered and login for any application.
-    version: 1.0.0
+info:
+  title: Authentication System
+  description: Here user use this API'S Docs to be registered and login for any application.
+  version: 1.0.0
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
 
 servers:
   - url: http://localhost:4200/
@@ -11,4 +17,49 @@ servers:
     description: This is a Live server URL for run backend Application.
 
 paths:
-    /register:
+  /register:
+    get:
+      summary: Represents a user
+      tags:
+        - Authentication
+      description: This resource represents an individual register user in our system. Each user is identified by a numeric `emailId`.
+      responses:
+        "200":
+          description: Return success message and data in JSON format.
+          tags: Authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstName:
+                    type: string
+                  middleName:
+                    type: string
+                  lastName: 
+                    type: string
+                  emailId: 
+                    type: string
+                  password: 
+                    type: string
+  /login:
+    get:
+      summary: Represents a user
+      tags:
+        - Authentication
+      description: This resource represents an individual check user in our system. Each user is identified by a numeric `emailId`.
+      responses:
+        "200":
+          description: Return success message.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  emailId: 
+                    type: string
+                  password: 
+                    type: string
+
+
+    
